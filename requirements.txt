@@ -5,5 +5,4 @@ asyncio
 logging
 aiocron
 gspread
-oauth2client.service_account
 datetime
