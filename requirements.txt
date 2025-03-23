@@ -6,3 +6,4 @@ logging
 aiocron
 gspread
 datetime
+oauth2client
