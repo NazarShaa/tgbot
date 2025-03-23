@@ -233,6 +233,8 @@ async def rating_poll(message: Message):
 
     await calculate_rating()
 
+aiocron.crontab("0 19 * * 5", func=scheduled_poll)
+
 # Запуск бота
 async def main():
     logging.basicConfig(level=logging.INFO)
