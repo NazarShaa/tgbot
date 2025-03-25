@@ -47,8 +47,12 @@ async def suggest_film(message: Message):
     film_name = args[1].strip()
 
     #special for liza
-    if film_name.lower() == "титаник":
-        await  message.answer(f"Никакого блять Титаника!!!")
+    if len(film_name) == len("титаник"):
+        film = film_name.lower()    
+        if (film[0] == "т" or film[0] == "t") and (film[2] == "т" or film[2] == "t") and 
+            (film[3] == "а" or film[3] == "a") and (film[4] == "н" or film[4] == "h") and 
+            (film[-1] == "к" or film[-1] == "k"):
+            await  message.answer(f"Никакого блять Титаника!!!")
 
     # Проверяем, нет ли уже такого фильма в списке
     if film_name.lower() in (name.lower() for name in film_suggestions):
@@ -57,9 +61,33 @@ async def suggest_film(message: Message):
         film_suggestions.add(film_name)
         await message.answer(f"Фильм '{film_name}' добавлен в список предложений!")
 
+@dp.message(Command("фото"))
+async def take_all_photos(message: Message):
+    if !check_command(message):
+        return
+    sunday = get_prev_sunday()    #ищем ближайшее время до воскресения
+                                  #начиная с воскресения до пн (окончание пн еще думаю) 
+                                  #нужно собрать все медиафайлы и загрузить их на гугл диск
+    return
+
+#special for CBOdron or Apollon
+@dp.message(Command("анекдот"))
+async def tell_anekdot(message : Message):
+    if !check_command(message):
+        return
+
+    #Нужно, чтобы бот заходил и искал анекдоты и отправлял их
+    await message.answer()
+
 
 # Функция для автоматического запуска голосования
-
+def check_command(message: Message):
+    args = message.text.split(maxsplit=1)
+    if len(args) < 2:
+        await message.answer("Пожалуйсте, введите правильную команду")
+        return False
+    return True
+    
 async def scheduled_poll():
     global poll_id, poll_results
 
@@ -83,7 +111,7 @@ async def scheduled_poll():
         allows_multiple_answers=True
     )
 
-        # Сохраняем id голосования для дальнейшего использования
+    sunday    # Сохраняем id голосования для дальнейшего использования
     poll_id = poll_message.poll.id
     print(f"Poll ID: {poll_id}")
 
@@ -137,7 +165,14 @@ async def handle_poll_answer(poll_answer: PollAnswer):
 
 
 #aiocron.crontab("*/1 * * * *", func=scheduled_poll)
-
+def get_prev_sunday():
+    today = datetime.today()
+    days_hps_sunday = (6 - today.weekday()) % 7
+    if days_hps_sunday == 0:
+        days_hps_sunday = -7
+    prev_sunday = today - timedelta(days=days_hps_sunday)
+    return prev_sunday.strftime("%d.%m.%y")
+    
 def get_next_sunday():
     today = datetime.today()
     days_until_sunday = (6 - today.weekday()) % 7  # 6 - воскресенье, weekday() начинается с 0 (понедельник)
