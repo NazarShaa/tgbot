@@ -34,7 +34,7 @@ async def start_command(message: Message):
 film_suggestions = set()
 poll_results = {}  # Словарь для хранения голосов
 poll_id = None  # Переменная для хранения ID голосования
-chat_id = -4642887339
+chat_id = -1002631253467
 
 # Обрабатываем команду /фильм НазваниеФильма
 @dp.message(Command("фильм"))
